@@ -530,26 +530,29 @@ Nepal's most known dishes are probably dal bhat (rice and lentils) and the popul
 </body>
 	<script>
 	
-// Change style of navbar on scroll
-window.onscroll = function() {myFunction()};
-function myFunction() {
-    var navbar = document.getElementById("myNavbar");
-    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-        navbar.className = " w3-bar" + " w3-padding" + " w3-card" + " w3-animate-top" + " w3-white";
-    } else {
-        navbar.className = navbar.className.replace(" w3-card w3-animate-top w3-white", "");
-    }
+function _(id){ return document.getElementById(id); }
+function submitForme(){
+	_("myform").disabled = true;
+	_("stode").innerHTML = ' please wait ...';
+	var formdata = new FormData();
+	formdata.append( "name1", _("name1").value );
+	formdata.append( "email2", _("email2").value );
+	formdata.append( "comment3", _("comment3").value );
+	var ajax = new XMLHttpRequest();
+	ajax.open( "POST", "contact12.php" );
+	ajax.onreadystatechange = function() {
+		if(ajax.readyState == 4 && ajax.status == 200) {
+			if(ajax.responseText == "success"){
+				_("form20").innerHTML = '<h4> Thanks '+_("name1").value+', your message was successfully sent!</h4>';
+			} else {
+				_("stode").innerHTML = ajax.responseText;
+				_("myform").disabled = false;
+			}
+		}
+	}
+	ajax.send( formdata );
 }
 
-// Used to toggle the menu on small screens when clicking on the menu button
-function toggleFunction() {
-    var x = document.getElementById("navDemo");
-    if (x.className.indexOf("w3-show") == -1) {
-        x.className += " w3-show";
-    } else {
-        x.className = x.className.replace(" w3-show", "");
-    }
-}
 
 	
 	
